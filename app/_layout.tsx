@@ -1,24 +1,32 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { ToastProvider } from "@/src/components/ui/Toast";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import "./global.css";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ToastProvider>
+        <SafeAreaProvider>
+          {/* StatusBar để chỉnh màu thanh pin/sóng phía trên cùng */}
+          <StatusBar style="dark" backgroundColor="white" />
+
+          {/* Stack quản lý việc chuyển màn hình */}
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              animation: "slide_from_right",
+              contentStyle: { backgroundColor: "#9FAFB" }, // (bg-gray-50)
+            }}
+          >
+            {/* Định nghĩa các màn hình chính */}
+            <Stack.Screen name="index" />
+            <Stack.Screen name="login" options={{ animation: "fade" }} />
+          </Stack>
+        </SafeAreaProvider>
+      </ToastProvider>
+    </GestureHandlerRootView>
   );
 }
