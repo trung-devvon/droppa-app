@@ -10,9 +10,11 @@ import Button from '@/src/components/ui/Button';
 import DroppaTruckLogo from '@/src/components/ui/DroppaTruckLogo';
 import Header from '@/src/components/ui/Header';
 
+import { useRouter } from 'expo-router';
+
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
 
   const { register, handleSubmit } = useForm({
     email: [rules.required('Email is required'), rules.email('Email is invalid')],
@@ -20,7 +22,7 @@ export default function Login() {
   })
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data)
+    router.push('/home');
   })
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -70,6 +72,7 @@ export default function Login() {
             <Button
               title="Đăng nhập"
               loading={isLoading}
+              onPress={() => router.push('/home')}
               variant="primary"
               size="lg"
               className="w-full shadow-lg shadow-primary-200"
