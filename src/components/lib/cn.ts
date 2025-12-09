@@ -1,7 +1,5 @@
-// lib/utils.ts
-export function cn(...classes: (any)[]) {
-  return classes
-    .flatMap(cls => cls?.trim().split(/\s+/) || [])
-    .filter(Boolean)
-    .join(" ");
+import clsx, { ClassValue } from 'clsx';
+
+export function cn(...inputs: ClassValue[]) {
+  return clsx(inputs);
 }

@@ -105,6 +105,8 @@ export default function Button({
     // Text color based on variant
     if (variant === 'outline' || variant === 'ghost') {
       styles.push(textStyles.colored);
+    } else if (variant === 'secondary') {
+      styles.push(textStyles.secondary);
     } else {
       styles.push(textStyles.white);
     }
@@ -126,7 +128,12 @@ export default function Button({
   };
 
   const getSpinnerColor = (): string => {
-    return variant === 'outline' || variant === 'ghost' ? '#2563eb' : '#ffffff';
+    if (variant === 'outline' || variant === 'ghost') {
+      return '#FF6200'; // Cam cho outline và ghost
+    } else if (variant === 'secondary') {
+      return '#993D00'; // Cam đậm cho secondary
+    }
+    return '#ffffff'; // Trắng cho primary và danger
   };
 
   return (
@@ -180,21 +187,21 @@ const baseStyles = StyleSheet.create({
 
 const variantStyles = StyleSheet.create({
   primary: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#FF6200', // Cam chính
   },
   secondary: {
-    backgroundColor: '#4b5563',
+    backgroundColor: '#FFCC80', // Cam nhạt (primary-200)
   },
   outline: {
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#2563eb',
+    borderColor: '#FF6200', // Viền cam
   },
   ghost: {
     backgroundColor: 'transparent',
   },
   danger: {
-    backgroundColor: '#dc2626',
+    backgroundColor: '#E31E24', // Đỏ từ tailwind config
   },
 });
 
@@ -221,7 +228,10 @@ const textStyles = StyleSheet.create({
     color: '#ffffff',
   },
   colored: {
-    color: '#2563eb',
+    color: '#FF6200', // Chữ cam cho outline và ghost
+  },
+  secondary: {
+    color: '#993D00', // Chữ cam đậm cho secondary button
   },
   sm: {
     fontSize: 14,
